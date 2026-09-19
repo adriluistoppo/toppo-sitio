@@ -52,10 +52,35 @@
      antes de que cargue nada: si no, se ve un destello blanco al abrir. */
   html, body, #root { height: 100%; margin: 0; background: #ECE4D4; }
   #root { display: flex; }
+
+  /* La espera, con el logo.
+     Entre que se pide la direccion y aparece Toppo hay un par de segundos en
+     blanco. Se llena con el logo, como hacen las aplicaciones del movil, y se
+     quita sola en cuanto la aplicacion pinta: no lleva JavaScript propio, solo
+     una animacion que la desvanece cuando #root ya tiene algo dentro. */
+  #espera {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ECE4D4;
+    z-index: 9;
+    animation: aparecer .4s ease-out both;
+  }
+  #espera img { width: 150px; height: auto; }
+  #root:not(:empty) + #espera { animation: irse .35s ease-in forwards; }
+  @keyframes aparecer { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes irse { to { opacity: 0; visibility: hidden } }
+  @media (prefers-reduced-motion: reduce) {
+    #espera { animation: none }
+    #root:not(:empty) + #espera { display: none }
+  }
 </style>
 <link rel="icon" href="/favicon.ico"/></head>
 <body>
 <div id="root"></div>
-<script src="/_expo/static/js/web/index-46678d0b9f07f067891411ece2fb1625.js" defer></script>
+<div id="espera" aria-hidden="true"><img src="./logo-toppo.png" alt=""></div>
+<script src="/_expo/static/js/web/index-c0fa64ec0789d8c5ff84b48944831369.js" defer></script>
 </body>
 </html>
