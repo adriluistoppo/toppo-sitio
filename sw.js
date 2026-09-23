@@ -26,7 +26,10 @@ self.addEventListener('push', (evento) => {
   const opciones = {
     body: datos.cuerpo || 'Los avisos de Toppo funcionan en este dispositivo.',
     icon: './icono-192.png',
-    badge: './icono-192.png',
+    // La insignia de la barra de Android va en blanco sobre transparente:
+    // Android la pinta de un solo color, y con el icono a color salía un
+    // cuadrado negro.
+    badge: './icono-aviso.png',
     lang: 'es-ES',
     data: { url: datos.url || './' },
   };

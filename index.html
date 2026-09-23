@@ -3,7 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--
+  viewport-fit=cover: sin esto el iPhone dice que la zona de la raya de abajo
+  mide cero, y la barra de secciones quedaba debajo de ella.
+  maximum-scale=1 y el touch-action de más abajo: el cliente pidió que al
+  pellizcar para hacer zoom no desaparezca la barra. Un zoom de pellizco
+  agranda la página entera y la barra se sale de la pantalla; el texto ya se
+  lee a su tamaño, así que se quita el pellizco.
+-->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, viewport-fit=cover">
 
 <title>Toppo — Convocatorias de empleo público</title>
 <meta name="description" content="Las oposiciones publicadas en el BOE y en boletines autonómicos, leídas cada mañana y ordenadas: plazas, requisitos, plazo de inscripción y temario, con la cita literal del boletín.">
@@ -51,6 +59,8 @@
   /* El fondo va aqui y no en la aplicacion para que el papel ya este puesto
      antes de que cargue nada: si no, se ve un destello blanco al abrir. */
   html, body, #root { height: 100%; margin: 0; background: #ECE4D4; }
+  /* Sin pellizco para hacer zoom (el iPhone ignora maximum-scale; esto no). */
+  html, body { touch-action: pan-x pan-y; }
   #root { display: flex; }
 
   /* La espera, con el logo.
@@ -81,6 +91,6 @@
 <body>
 <div id="root"></div>
 <div id="espera" aria-hidden="true"><img src="./logo-toppo.png" alt=""></div>
-<script src="/_expo/static/js/web/index-78102ecea56bb0b6c6dd0dbbc58c7dba.js" defer></script>
+<script src="/_expo/static/js/web/index-5dd3f65a002c4e72daaa2329109bc1e8.js" defer></script>
 </body>
 </html>
