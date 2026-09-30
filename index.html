@@ -59,6 +59,11 @@
   /* El fondo va aqui y no en la aplicacion para que el papel ya este puesto
      antes de que cargue nada: si no, se ve un destello blanco al abrir. */
   html, body, #root { height: 100%; margin: 0; background: #ECE4D4; }
+  /* Lo que el iPhone pinta fuera de la pagina -la franja de la raya de abajo
+     en Safari, y al estirar la pagina- sale del fondo de html. Arriba beige,
+     como la pagina; abajo blanco, como la barra de secciones: si no, quedaba
+     una franja beige debajo de los iconos (lo vio el cliente el 24-sep). */
+  html { background: linear-gradient(#ECE4D4 50%, #FFFDF7 50%); }
   /* Sin pellizco para hacer zoom (el iPhone ignora maximum-scale; esto no). */
   html, body { touch-action: pan-x pan-y; }
   #root { display: flex; }
@@ -91,6 +96,6 @@
 <body>
 <div id="root"></div>
 <div id="espera" aria-hidden="true"><img src="./logo-toppo.png" alt=""></div>
-<script src="/_expo/static/js/web/index-3e1ad79fbd2eefe44e22a064498f2134.js" defer></script>
+<script src="/_expo/static/js/web/index-2703807ee64d359cd44c048968e242b6.js" defer></script>
 </body>
 </html>
