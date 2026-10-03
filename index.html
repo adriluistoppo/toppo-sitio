@@ -64,6 +64,11 @@
      como la pagina; abajo blanco, como la barra de secciones: si no, quedaba
      una franja beige debajo de los iconos (lo vio el cliente el 24-sep). */
   html { background: linear-gradient(#ECE4D4 50%, #FFFDF7 50%); }
+  /* Y sin repetirse: el degradado se repetía por debajo de la página, así que
+     la franja de la raya de abajo volvía a empezar en beige justo donde
+     acaba la barra (lo volvió a ver el socio el 2-oct). Fuera del dibujo de
+     la página manda el blanco de la barra. */
+  html { background-repeat: no-repeat; background-color: #FFFDF7; }
   /* Sin pellizco para hacer zoom (el iPhone ignora maximum-scale; esto no). */
   html, body { touch-action: pan-x pan-y; }
   #root { display: flex; }
@@ -96,6 +101,6 @@
 <body>
 <div id="root"></div>
 <div id="espera" aria-hidden="true"><img src="./logo-toppo.png" alt=""></div>
-<script src="/_expo/static/js/web/index-53db1a81d1afe1366b3cf25b2a9b2796.js" defer></script>
+<script src="/_expo/static/js/web/index-2877e66d714da8f19ea64baa6af7d931.js" defer></script>
 </body>
 </html>

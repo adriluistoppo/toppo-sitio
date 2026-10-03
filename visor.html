@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFDF7">
+<title>Toppo — PDF</title>
+<!--
+  Visor de PDF con cabecera: título y "Volver".
+
+  Lo pidió el cliente el 2-oct. En el iPhone, con Toppo en la pantalla de
+  inicio, un PDF se abría a pantalla completa sin ningún botón: solo se podía
+  volver deslizando desde el borde, y no todo el mundo lo sabe. Aquí el PDF se
+  dibuja página a página con pdf.js (el mismo lector de Firefox), debajo de
+  una cabecera fija con el botón para volver.
+
+  Solo abre PDF de la propia app.toppo.es (los exámenes copiados del INAP):
+  dibujar un PDF de otro sitio exigiría que ese sitio lo permitiera.
+-->
+<style>
+  html, body { margin: 0; background: #ECE4D4; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1B1917; }
+  header {
+    position: sticky; top: 0; z-index: 2;
+    display: flex; align-items: center; gap: 12px;
+    padding: calc(env(safe-area-inset-top) + 10px) 16px 10px;
+    background: #FFFDF7; border-bottom: 1px solid #DED4BF;
+  }
+  button, a.boton {
+    font: 500 15px/1 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1B1917; background: none; border: 1px solid #1B1917; padding: 8px 12px;
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+  }
+  h1 { flex: 1; min-width: 0; margin: 0; font: 600 16px/1.25 Georgia, serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  main { padding: 12px 0 calc(env(safe-area-inset-bottom) + 24px); }
+  canvas { display: block; margin: 0 auto 12px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.15); max-width: 100%; }
+  .aviso { max-width: 520px; margin: 40px auto; padding: 0 16px; font-size: 15px; line-height: 1.5; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <button id="volver" type="button">← Volver</button>
+  <h1 id="titulo">PDF</h1>
+  <a id="descargar" class="boton" href="#" download>Descargar</a>
+</header>
+<main id="paginas"><p class="aviso" id="estado">Abriendo el PDF…</p></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var pdf = q.get('pdf') || '';
+  var titulo = q.get('titulo') || 'PDF';
+  document.getElementById('titulo').textContent = titulo;
+  document.title = titulo + ' — Toppo';
+
+  // Volver: a la pantalla anterior si la hay; si el PDF se abrió en una
+  // pestaña nueva, se cierra; y si no, a la portada de la app.
+  document.getElementById('volver').onclick = function () {
+    if (history.length > 1) { history.back(); return; }
+    window.close();
+    setTimeout(function () { location.href = './'; }, 150);
+  };
+
+  var estado = document.getElementById('estado');
+  var url;
+  try { url = new URL(pdf, location.href); } catch (e) { url = null; }
+  // Solo PDF de esta misma web.
+  if (!url || url.origin !== location.origin || !/\.pdf$/i.test(url.pathname)) {
+    estado.textContent = 'No se puede abrir este documento.';
+    return;
+  }
+  document.getElementById('descargar').href = url.href;
+
+  if (!window.pdfjsLib) {
+    // Sin el lector (sin conexión al CDN): se abre el PDF tal cual.
+    location.replace(url.href);
+    return;
+  }
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  var contenedor = document.getElementById('paginas');
+  pdfjsLib.getDocument(url.href).promise.then(function (doc) {
+    contenedor.innerHTML = '';
+    var ancho = Math.min(contenedor.clientWidth || window.innerWidth, 900) - 16;
+    var ppp = Math.min(window.devicePixelRatio || 1, 2);
+    var cadena = Promise.resolve();
+    for (var n = 1; n <= doc.numPages; n++) {
+      (function (n) {
+        cadena = cadena.then(function () {
+          return doc.getPage(n).then(function (pagina) {
+            var base = pagina.getViewport({ scale: 1 });
+            var escala = ancho / base.width;
+            var vista = pagina.getViewport({ scale: escala * ppp });
+            var lienzo = document.createElement('canvas');
+            lienzo.width = vista.width;
+            lienzo.height = vista.height;
+            lienzo.style.width = Math.floor(vista.width / ppp) + 'px';
+            lienzo.setAttribute('aria-label', 'Página ' + n + ' de ' + doc.numPages);
+            contenedor.appendChild(lienzo);
+            return pagina.render({ canvasContext: lienzo.getContext('2d'), viewport: vista }).promise;
+          });
+        });
+      })(n);
+    }
+  }).catch(function () {
+    estado.innerHTML = 'No se ha podido mostrar el PDF aquí. <a href="' + url.href + '">Ábrelo directamente</a>.';
+  });
+})();
+</script>
+</body>
+</html>
