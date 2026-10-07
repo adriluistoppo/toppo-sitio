@@ -49,7 +49,7 @@
   aplicaciones fuera de su tienda sin cuenta de desarrollador de pago.
 -->
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#ECE4D4">
+<meta name="theme-color" content="#FFFDF7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Toppo">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -63,12 +63,12 @@
      en Safari, y al estirar la pagina- sale del fondo de html. Arriba beige,
      como la pagina; abajo blanco, como la barra de secciones: si no, quedaba
      una franja beige debajo de los iconos (lo vio el cliente el 24-sep). */
-  html { background: linear-gradient(#ECE4D4 50%, #FFFDF7 50%); }
+  html { background: linear-gradient(#FFFDF7 50%, #ECE4D4 50%); }
   /* Y sin repetirse: el degradado se repetía por debajo de la página, así que
      la franja de la raya de abajo volvía a empezar en beige justo donde
      acaba la barra (lo volvió a ver el socio el 2-oct). Fuera del dibujo de
      la página manda el blanco de la barra. */
-  html { background-repeat: no-repeat; background-color: #FFFDF7; }
+  html { background-repeat: no-repeat; background-color: #ECE4D4; }
   /* Sin pellizco para hacer zoom (el iPhone ignora maximum-scale; esto no). */
   html, body { touch-action: pan-x pan-y; }
   #root { display: flex; }
@@ -101,6 +101,6 @@
 <body>
 <div id="root"></div>
 <div id="espera" aria-hidden="true"><img src="./logo-toppo.png" alt=""></div>
-<script src="/_expo/static/js/web/index-fff63e4d3d878203d470652d3853c1d3.js" defer></script>
+<script src="/_expo/static/js/web/index-255a2c18288c24dfe53d021b53306b5c.js" defer></script>
 </body>
 </html>
