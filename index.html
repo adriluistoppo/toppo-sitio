@@ -58,17 +58,12 @@
 <style>
   /* El fondo va aqui y no en la aplicacion para que el papel ya este puesto
      antes de que cargue nada: si no, se ve un destello blanco al abrir. */
-  html, body, #root { height: 100%; margin: 0; background: #ECE4D4; }
-  /* Lo que el iPhone pinta fuera de la pagina -la franja de la raya de abajo
-     en Safari, y al estirar la pagina- sale del fondo de html. Arriba beige,
-     como la pagina; abajo blanco, como la barra de secciones: si no, quedaba
-     una franja beige debajo de los iconos (lo vio el cliente el 24-sep). */
-  html { background: linear-gradient(#FFFDF7 50%, #ECE4D4 50%); }
-  /* Y sin repetirse: el degradado se repetía por debajo de la página, así que
-     la franja de la raya de abajo volvía a empezar en beige justo donde
-     acaba la barra (lo volvió a ver el socio el 2-oct). Fuera del dibujo de
-     la página manda el blanco de la barra. */
-  html { background-repeat: no-repeat; background-color: #ECE4D4; }
+  html, body, #root { height: 100%; margin: 0; background: #FFFDF7; }
+  /* Lo que el iPhone pinta fuera de la pagina -la franja de la hora, la de
+     la raya de abajo y lo que se ve al estirar la pagina- sale del fondo de
+     html y body. Todo en blanco, como la cabecera y la barra de secciones
+     (Ale, 7-oct: la franja de la hora salia beige oscuro en el iPhone; el
+     Safari nuevo la colorea con el fondo de la pagina, no con theme-color). */
   /* Sin pellizco para hacer zoom (el iPhone ignora maximum-scale; esto no). */
   html, body { touch-action: pan-x pan-y; }
   #root { display: flex; }
@@ -84,7 +79,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ECE4D4;
+    background: #FFFDF7;
     z-index: 9;
     animation: aparecer .4s ease-out both;
   }
@@ -101,6 +96,6 @@
 <body>
 <div id="root"></div>
 <div id="espera" aria-hidden="true"><img src="./logo-toppo.png" alt=""></div>
-<script src="/_expo/static/js/web/index-5aeee2c98e30e653921083b5e5187e23.js" defer></script>
+<script src="/_expo/static/js/web/index-6941986e9760755066692f35accfa2b6.js" defer></script>
 </body>
 </html>
