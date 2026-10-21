@@ -27,11 +27,11 @@ self.addEventListener('push', (evento) => {
     body: datos.cuerpo || 'Los avisos de Toppo funcionan en este dispositivo.',
     // Solo el círculo del perrito, sin la palabra "Toppo": con ella el dibujo
     // quedaba diminuto en el aviso (lo pidió el cliente el 24-sep).
-    icon: './icono-notificacion-v2.png',
+    icon: './icono-notificacion-v3.png',
     // La insignia de la barra de Android va en blanco sobre transparente:
     // Android la pinta de un solo color, y con el icono a color salía un
     // cuadrado negro.
-    badge: './icono-aviso-v2.png',
+    badge: './icono-aviso-v3.png',
     lang: 'es-ES',
     data: { url: datos.url || './' },
   };
